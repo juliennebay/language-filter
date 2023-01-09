@@ -17,9 +17,25 @@ function List() {
   return (
     <Fragment>
       <div>
-        {items.map((item, index) => (
-          <h4 key={index}>{item.full_name}</h4>
-        ))}
+        <ul>
+          {items
+            .sort((a, b) =>
+              b.created_at > a.created_at
+                ? 1
+                : b.created_at < a.created_at
+                ? -1
+                : 0
+            )
+            .map((item) => (
+              <li key={item.id}>
+                <div>Repository name: {item.name}</div>
+                <div>Description: {item.description}</div>
+                <div>Language: {item.language}</div>
+                <div>Forks count: {item.forks_count}</div>
+                <div>Creation date - remove later: {item.created_at}</div>
+              </li>
+            ))}
+        </ul>
       </div>
     </Fragment>
   );
