@@ -16,6 +16,7 @@ repos.get('/', async (_, res) => {
     (repo) => repo.fork === false
   );
 
+  //console.log(unforkedRepos);
   res.status(200);
 
   // TODO: See README.md Task (A). Return repo data here. You’ve got this!
