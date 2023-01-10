@@ -1,11 +1,15 @@
 import { useState, useEffect, Fragment } from 'react';
 
 import Header from './Header';
+import RepoDetails from './RepoDetails';
 
 function List() {
   const [items, setItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [commitUrl, setCommitUrl] = useState(null);
+  const [fullName, setFullName] = useState(null);
 
   //****note to self - error handling */
   useEffect(() => {
@@ -19,6 +23,12 @@ function List() {
 
     dataFetch();
   }, []);
+
+  const showRepoDetails = (item) => {
+    setCommitUrl(`${item.url}/commits`);
+    setFullName(item.full_name);
+    setShowModal(true);
+  };
 
   if (!loading) {
     return <div>Loading...please wait</div>;
@@ -43,12 +53,11 @@ function List() {
                     : 0
                 )
                 .map((item) => (
-                  <li key={item.id}>
+                  <li key={item.id} onClick={() => showRepoDetails(item)}>
                     <div>Repository name: {item.name}</div>
                     <div>Description: {item.description}</div>
                     <div>Language: {item.language}</div>
                     <div>Forks count: {item.forks_count}</div>
-                    <div>Creation date - remove later: {item.created_at}</div>
                   </li>
                 ))}
             </ul>
@@ -56,6 +65,12 @@ function List() {
             <div>No repo found under this language</div>
           )}
         </div>
+        <RepoDetails
+          commitUrl={commitUrl}
+          fullName={fullName}
+          showModal={showModal}
+          closeModal={() => setShowModal(false)}
+        />
       </Fragment>
     );
   }
