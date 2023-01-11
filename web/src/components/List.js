@@ -20,11 +20,15 @@ function List() {
 
         const result = await fetchResult.json();
 
-        setItems(result);
-        setFilteredItems(result);
+        const sortedResult = result.sort((a, b) =>
+          b.created_at > a.created_at ? 1 : b.created_at < a.created_at ? -1 : 0
+        );
+
+        setItems(sortedResult);
+        setFilteredItems(sortedResult);
         setLoading(true);
         setAvailableLanguages([
-          ...new Set(result.map((item) => item.language)),
+          ...new Set(sortedResult.map((item) => item.language)),
         ]);
       } catch (err) {
         console.log('there was an error:', err);
@@ -40,6 +44,8 @@ function List() {
     setFullName(item.full_name);
     setShowModal(true);
   };
+
+  console.log('filtered items: ', filteredItems);
 
   if (error) {
     return <div>An error occurred. Refresh page</div>;
@@ -59,25 +65,17 @@ function List() {
         <div>
           {filteredItems.length !== 0 ? (
             <ul>
-              {[...filteredItems]
-                .sort((a, b) =>
-                  b.created_at > a.created_at
-                    ? 1
-                    : b.created_at < a.created_at
-                    ? -1
-                    : 0
-                )
-                .map((item) => (
-                  <li key={item.id}>
-                    <div>Repository name: {item.name}</div>
-                    <div>Description: {item.description}</div>
-                    <div>Language: {item.language}</div>
-                    <div>Forks count: {item.forks_count}</div>
-                    <button onClick={() => showRepoDetails(item)}>
-                      More Info
-                    </button>
-                  </li>
-                ))}
+              {filteredItems.map((item) => (
+                <li key={item.id}>
+                  <div>Repository name: {item.name}</div>
+                  <div>Description: {item.description}</div>
+                  <div>Language: {item.language}</div>
+                  <div>Forks count: {item.forks_count}</div>
+                  <button onClick={() => showRepoDetails(item)}>
+                    More Info
+                  </button>
+                </li>
+              ))}
             </ul>
           ) : (
             <div>No repo found under this language</div>
