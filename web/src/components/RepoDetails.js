@@ -6,10 +6,13 @@ function RepoDetails({ commitUrl, fullName, showModal, closeModal }) {
   const [author, setAuthor] = useState([]);
   const [commitDate, setCommitDate] = useState([]);
   const [commitMessage, setCommitMessage] = useState([]);
-  const [readMe, setReadMe] = useState([]);
+  const [readMe, setReadMe] = useState('');
 
   useEffect(() => {
     const dataFetch = async () => {
+      if (!commitUrl) {
+        return;
+      }
       const res = await (await fetch(commitUrl)).json();
       const commit = res.sort((a, b) =>
         b.commit.author.date > a.commit.author.date
@@ -28,6 +31,9 @@ function RepoDetails({ commitUrl, fullName, showModal, closeModal }) {
 
   //readME
   useEffect(() => {
+    if (!fullName) {
+      return;
+    }
     fetch(`https://raw.githubusercontent.com/${fullName}/master/README.md`)
       .then((res) => res.text())
       .then((result) => {

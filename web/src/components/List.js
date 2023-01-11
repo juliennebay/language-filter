@@ -4,6 +4,7 @@ import Header from './Header';
 import RepoDetails from './RepoDetails';
 
 function List() {
+  const [error, setError] = useState(null);
   const [items, setItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -12,21 +13,27 @@ function List() {
   const [fullName, setFullName] = useState(null);
   const [availableLanguages, setAvailableLanguages] = useState([]);
 
-  //****note to self - error handling */
   useEffect(() => {
     const dataFetch = async () => {
-      const result = await (await fetch('http://localhost:4000/repos')).json();
+      try {
+        const fetchResult = await fetch('http://localhost:4000/repos');
 
-      setItems(result);
-      setFilteredItems(result);
-      setLoading(true);
-      setAvailableLanguages([...new Set(result.map((item) => item.language))]);
+        const result = await fetchResult.json();
+
+        setItems(result);
+        setFilteredItems(result);
+        setLoading(true);
+        setAvailableLanguages([
+          ...new Set(result.map((item) => item.language)),
+        ]);
+      } catch (err) {
+        console.log('there was an error:', err);
+        setError(true);
+      }
     };
 
     dataFetch();
   }, []);
-
-  console.log(availableLanguages);
 
   const showRepoDetails = (item) => {
     setCommitUrl(`${item.url}/commits`);
@@ -34,6 +41,9 @@ function List() {
     setShowModal(true);
   };
 
+  if (error) {
+    return <div>An error occurred. Refresh page</div>;
+  }
   if (!loading) {
     return <div>Loading...please wait</div>;
   } else {
