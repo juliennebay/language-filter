@@ -10,6 +10,7 @@ function List() {
   const [showModal, setShowModal] = useState(false);
   const [commitUrl, setCommitUrl] = useState(null);
   const [fullName, setFullName] = useState(null);
+  const [availableLanguages, setAvailableLanguages] = useState([]);
 
   //****note to self - error handling */
   useEffect(() => {
@@ -19,10 +20,13 @@ function List() {
       setItems(result);
       setFilteredItems(result);
       setLoading(true);
+      setAvailableLanguages([...new Set(result.map((item) => item.language))]);
     };
 
     dataFetch();
   }, []);
+
+  console.log(availableLanguages);
 
   const showRepoDetails = (item) => {
     setCommitUrl(`${item.url}/commits`);
@@ -36,6 +40,7 @@ function List() {
     return (
       <>
         <Header
+          availableLanguages={availableLanguages}
           filter={(language) =>
             setFilteredItems(items.filter((item) => item.language === language))
           }
