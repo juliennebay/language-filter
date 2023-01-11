@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment } from 'react';
+import { useState, useEffect } from 'react';
 
 import Header from './Header';
 import RepoDetails from './RepoDetails';
@@ -34,7 +34,7 @@ function List() {
     return <div>Loading...please wait</div>;
   } else {
     return (
-      <Fragment>
+      <>
         <Header
           filter={(language) =>
             setFilteredItems(items.filter((item) => item.language === language))
@@ -44,7 +44,7 @@ function List() {
         <div>
           {filteredItems.length !== 0 ? (
             <ul>
-              {filteredItems
+              {[...filteredItems]
                 .sort((a, b) =>
                   b.created_at > a.created_at
                     ? 1
@@ -53,11 +53,14 @@ function List() {
                     : 0
                 )
                 .map((item) => (
-                  <li key={item.id} onClick={() => showRepoDetails(item)}>
+                  <li key={item.id}>
                     <div>Repository name: {item.name}</div>
                     <div>Description: {item.description}</div>
                     <div>Language: {item.language}</div>
                     <div>Forks count: {item.forks_count}</div>
+                    <button onClick={() => showRepoDetails(item)}>
+                      More Info
+                    </button>
                   </li>
                 ))}
             </ul>
@@ -71,7 +74,7 @@ function List() {
           showModal={showModal}
           closeModal={() => setShowModal(false)}
         />
-      </Fragment>
+      </>
     );
   }
 }

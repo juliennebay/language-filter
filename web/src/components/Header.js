@@ -1,8 +1,6 @@
-import { Fragment } from 'react';
-
 const Header = ({ filter, reset }) => {
   return (
-    <Fragment>
+    <>
       <h1>Filter items by language</h1>
       <h3>*Click the items for more info</h3>
       <div>
@@ -15,7 +13,7 @@ const Header = ({ filter, reset }) => {
         <button onClick={() => filter('null')}>Not specified</button>
         <button onClick={reset}>Reset</button>
       </div>
-    </Fragment>
+    </>
   );
 };
 
