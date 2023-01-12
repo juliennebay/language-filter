@@ -1,0 +1,19 @@
+li {
+  list-style-type: none;
+}
+
+.list {
+  margin-bottom: 0.5rem;
+  width: 40%;
+  padding: 1rem;
+  cursor: pointer;
+  border-bottom: 0.1rem solid #d3d3d3;
+}
+
+button {
+  margin-top: 1em;
+}
+
+h2 {
+  padding: 1rem;
+}

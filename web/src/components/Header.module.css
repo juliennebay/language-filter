@@ -1,0 +1,17 @@
+h1 {
+  display: flex;
+  justify-content: center;
+}
+.buttons-list {
+  display: flex;
+  justify-content: center;
+}
+.button {
+  background-color: black;
+  color: white;
+  font-size: 1em;
+  padding: 1rem 1rem;
+  border-radius: 0.6rem;
+  margin: 0.5rem 0.2rem;
+  cursor: pointer;
+}

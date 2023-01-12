@@ -1,0 +1,20 @@
+.modal {
+  background: #f8f8f8;
+  width: 67%;
+  height: 76%;
+  padding: 2rem;
+  margin: 2rem 5rem;
+  overflow-y: auto;
+  border: 0.3em solid black;
+}
+
+.btn {
+  background-color: black;
+  color: white;
+  font-size: 1em;
+  text-transform: uppercase;
+  padding: 1rem 2rem;
+  border-radius: 0.6rem;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+}

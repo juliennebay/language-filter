@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import Modal from 'react-modal';
 
+import classes from './RepoDetails.module.css';
+
 function RepoDetails({ commitUrl, fullName, showModal, closeModal }) {
   const [author, setAuthor] = useState([]);
   const [commitDate, setCommitDate] = useState([]);
@@ -42,8 +44,10 @@ function RepoDetails({ commitUrl, fullName, showModal, closeModal }) {
   }, [fullName]);
 
   return (
-    <Modal isOpen={showModal}>
-      <button onClick={closeModal}>close</button>
+    <Modal className={classes.modal} isOpen={showModal}>
+      <button className={classes.btn} onClick={closeModal}>
+        close
+      </button>
       <div>Author: {author}</div>
       <div>Commit date: {commitDate}</div>
       <div>Message: {commitMessage}</div>

@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import Header from './Header';
 import RepoDetails from './RepoDetails';
 
+import classes from './List.module.css';
+
 function List() {
   const [error, setError] = useState(null);
   const [items, setItems] = useState([]);
@@ -45,13 +47,11 @@ function List() {
     setShowModal(true);
   };
 
-  console.log('filtered items: ', filteredItems);
-
   if (error) {
-    return <div>An error occurred. Refresh page</div>;
+    return <h2>An error occurred. Refresh page</h2>;
   }
   if (!loading) {
-    return <div>Loading...please wait</div>;
+    return <h2>Loading...please wait</h2>;
   } else {
     return (
       <>
@@ -66,7 +66,7 @@ function List() {
           {filteredItems.length !== 0 ? (
             <ul>
               {filteredItems.map((item) => (
-                <li key={item.id}>
+                <li key={item.id} className={classes.list}>
                   <div>Repository name: {item.name}</div>
                   <div>Description: {item.description}</div>
                   <div>Language: {item.language}</div>
