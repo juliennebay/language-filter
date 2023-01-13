@@ -1,6 +1,14 @@
 import { Router } from 'express';
 import axios from 'axios';
 
+const fs = require('fs');
+
+const json = fs.readFileSync('./data/repos.json');
+
+const localData = JSON.parse(json);
+
+const unforkedLocalData = localData.filter((repo) => repo.fork === false);
+
 export const repos = Router();
 
 repos.get('/', async (_, res) => {
@@ -12,13 +20,12 @@ repos.get('/', async (_, res) => {
       res.status(status).send(`${status}: ${statusText}`);
     });
 
-  const unforkedRepos = silverOrangeRepos.data.filter(
+  const unforkedRemoteData = silverOrangeRepos.data.filter(
     (repo) => repo.fork === false
   );
 
-  //console.log(unforkedRepos);
   res.status(200);
 
   // TODO: See README.md Task (A). Return repo data here. You’ve got this!
-  res.json(unforkedRepos);
+  res.json([...unforkedRemoteData, ...unforkedLocalData]);
 });
